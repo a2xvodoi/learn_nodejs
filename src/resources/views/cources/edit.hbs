@@ -1,0 +1,19 @@
+<div class="m-4">
+    <div class="h1">Cập nhật khóa học</div>
+<form method="POST" action="/cources/{{cource._id}}?_method=PUT">
+  <div class="mb-3">
+    <label for="name" class="form-label">Tên khóa học</label>
+    <input type="text" class="form-control" value="{{cource.name}}" id="name" name="name">
+  </div>
+  <div class="mb-3">
+    <label for="decripsions" class="form-label">Mô tả</label>
+    <input type="text" class="form-control" value="{{cource.decripsions}}" id="name" name="decripsions">
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Ảnh</label>
+    <input type="text" class="form-control" value="{{cource.image}}" id="image" name="image">
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Thêm khóa học</button>
+</form>
+</div>

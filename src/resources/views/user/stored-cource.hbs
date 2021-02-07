@@ -1,0 +1,68 @@
+<div class="m-4">
+    <div class="h1">Khóa học của tôi</div>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tên khóa học</th>
+      <th scope="col">Dicripsions</th>
+      <th scope="col">Image</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each Cources}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.decripsions}}</td>
+      <td>{{this.image}}</td>
+      <td>
+          <a href="/cources/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+          <a href="" class="btn btn-link"  data-bs-toggle="modal" data-bs-target="#delete-cource" data-id="{{this._id}}">Xóa</a>
+      </td>
+    </tr>
+    
+    {{/each}}
+    
+  </tbody>
+</table>
+<div class="modal" id="delete-cource" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa khóa học<br>
+        
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn xóa khóa học này?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="btn-delete-cource" >Xóa</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Hủy bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<form method="POST" name="form-delete-cource"></form>
+<script>
+    var courceID;
+    var btnDeleteCource = document.getElementById('btn-delete-cource');
+    var deletecource = document.getElementById('delete-cource');
+    var formDeleteCource = document.forms['form-delete-cource'];
+
+    deletecource.addEventListener('show.bs.modal', function (event) {
+        
+        var button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        courceID = button.getAttribute('data-id');
+        
+    })
+    btnDeleteCource.onclick = function(){
+        formDeleteCource.action = '/cources/' + courceID + '?_method=DELETE';
+        formDeleteCource.submit();
+    }
+</script>

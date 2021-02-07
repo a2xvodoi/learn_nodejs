@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const handlebars  = require('express-handlebars');
 const path = require('path');
 const router = require('./routers');
+var methodOverride = require('method-override')
 
 const db = require('./config/db');
 
@@ -18,10 +19,14 @@ app.use(express.static(path.join(__dirname,'public')));
 //body-parsers
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-
+app.use(methodOverride('_method'));
 // template engine
 app.engine('hbs', handlebars({
-  extname: '.hbs'
+  extname: '.hbs',
+  helpers:{
+    sum : (a,b) => a +b,
+  }
+  
 }));
 app.set('view engine', 'hbs');
 app.set('views',path.join(__dirname,'resources/views'));

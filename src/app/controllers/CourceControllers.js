@@ -25,3 +25,25 @@ module.exports.postCreate = function(req, res, next){
 
     })
 }
+
+module.exports.edit = function(req, res, next){
+    Cource.findById(req.params.id)
+        .then(cource =>{
+            res.render('cources/edit',{
+                cource : toObj(cource)
+            });
+        })
+        .catch(next);
+}
+
+module.exports.update = function(req, res, next){
+    Cource.updateOne({_id : req.params.id}, req.body)
+    .then(() => res.redirect('/user/stored/cource'))
+    .catch(next);
+}
+
+module.exports.destroy = function(req, res, next){
+    Cource.deleteOne({_id : req.params.id})
+    .then(() => res.redirect('back'))
+    .catch(next);
+}
