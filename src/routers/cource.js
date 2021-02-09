@@ -7,6 +7,7 @@ router.get('/create', courceControllers.create);
 router.get('/:id/edit', courceControllers.edit);
 router.put('/:id', courceControllers.update);
 router.delete('/:id', courceControllers.destroy);
+router.patch('/:id/restore', courceControllers.restore);
 router.post('/postCreate', courceControllers.postCreate);
 router.get('/:slug', courceControllers.show);
 

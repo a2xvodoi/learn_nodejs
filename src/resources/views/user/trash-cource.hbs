@@ -1,8 +1,6 @@
 <div class="m-4">
-    <div class="h1">Khóa học của tôi
-      <a href="/user/stored/trash" class="float-end fs-5">Thùng rác({{deletedCount}})</a>
-    </div>
-
+    <a href="/user/stored/cource">Quay lại</a>
+    <div class="h1">Khóa học đã xóa({{deletedCount}})</div>
   <table class="table">
   <thead>
     <tr>
@@ -21,12 +19,12 @@
       <td>{{this.decripsions}}</td>
       <td><img src="{{this.image}}" width="100px" height="70px" alt=""></td>
       <td>
-          <a href="/cources/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+          <a href="" class="btn btn-link btn-restored" data-id="{{this._id}}">Khôi phục</a>
           <a href="" class="btn btn-link"  data-bs-toggle="modal" data-bs-target="#delete-cource" data-id="{{this._id}}">Xóa</a>
       </td>
     </tr>
     {{else}}
-      <div class="text-center h2 text-grey">Bạn chưa có khóa học nào</div>
+      <div class="text-center h2 text-grey">Bạn chưa có khóa học vào trong thùng rác. <a href="/user/stored/cource">Danh sách khóa học</a></div>
     {{/each}}
     
   </tbody>
@@ -41,7 +39,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Bạn có chắc chắn muốn xóa khóa học này?</p>
+        <p class="fs-5">Bạn có chắc chắn muốn xóa khóa học này?</p>
+        <p>Lưu ý: Khi bạn xóa khóa học này sẽ không thể khôi phục được.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" id="btn-delete-cource" >Xóa</button>
@@ -52,12 +51,14 @@
 </div>
 </div>
 <form method="POST" name="form-delete-cource"></form>
+<form method="POST" name="form-restore-cource"></form>
 <script>
     var courceID;
     var btnDeleteCource = document.getElementById('btn-delete-cource');
     var deletecource = document.getElementById('delete-cource');
     var formDeleteCource = document.forms['form-delete-cource'];
-
+    var formRestoreCource = document.forms['form-restore-cource'];
+    var btnRestored = $('.btn-restored');
     deletecource.addEventListener('show.bs.modal', function (event) {
         
         var button = event.relatedTarget;
@@ -66,7 +67,13 @@
         
     })
     btnDeleteCource.onclick = function(){
-        formDeleteCource.action = '/cources/' + courceID + '?_method=DELETE';
+        formDeleteCource.action = '/user/stored/trash/' + courceID + '?_method=DELETE';
         formDeleteCource.submit();
     }
+    btnRestored.click(function(event){
+        event.preventDefault();
+
+        formRestoreCource.action ='/cources/' + $(this).data('id') + '/restore?_method=PATCH';
+        formRestoreCource.submit();
+    });
 </script>
