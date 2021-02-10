@@ -52,3 +52,26 @@ module.exports.restore = function(req, res, next){
     .then(() => res.redirect('back'))
     .catch(next);
 }
+
+module.exports.handleFormAction = function(req, res, next){
+    switch(req.body.action){
+        case 'delete':
+            Cource.delete({_id : {$in : req.body.courceId}})
+            .then(() => res.redirect('back'))
+            .catch(next);
+            break;
+        case 'delete-fouce':
+            Cource.deleteMany({_id : {$in : req.body.courceIds}})
+            .then(() => res.redirect('back'))
+            .catch(next);
+            break;
+        case 'restore':
+            Cource.restore({_id : {$in : req.body.courceIds}})
+            .then(() => res.redirect('back'))
+            .catch(next);
+            break;
+        default:
+            res.send('<h1 style="color:red">Action not isvalid</h1>');
+    }
+    
+}
